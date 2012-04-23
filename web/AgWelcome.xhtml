@@ -1,0 +1,91 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:pou="http://primefaces.org/ui">
+      
+    
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <link href="./resources/css/default.css" rel="stylesheet" type="text/css" />
+        <link href="./resources/css/cssLayout.css" rel="stylesheet" type="text/css" />
+        <title>Silver Trumpets</title>
+    </h:head>
+
+    <h:body>
+              
+        <div id="top">
+            <h:panelGrid id="title_table" bodyrows="1" cellspacing="2px" columns="2" border="0" width="100%"
+                         columnClasses="title_image,title_content">
+                <h:graphicImage id="trumpetImage" url="/images/SilverTrumpets.jpg"  alt="#{msgs.header_image_alt}" height="100" width="100"></h:graphicImage>
+                <h:panelGroup styleClass="title_content">
+                    <h:outputLabel styleClass="title_content">#{msgs.header_title_main}</h:outputLabel>
+                    <br></br>
+                    <h:outputLabel styleClass="title_content_subtle">#{msgs.header_title_verse}</h:outputLabel> 
+                </h:panelGroup>
+            </h:panelGrid>            
+        </div>
+
+        <div id="content">
+            <h:panelGrid columns="2" styleClass="center_content">
+            <h:graphicImage id="space" url="/images/blank.gif"  height="530" width="1"></h:graphicImage>
+            <h:panelGroup styleClass="center_content">
+            <h:form id="loginForm" styleClass="center_content">
+            <pou:messages id="errorDisplay"  showSummary="true" showDetail="true"></pou:messages>
+            
+            <h:panelGrid id="contentGrid" columns="3" width="100%" styleClass="center_content"
+                         columnClasses="control_center, control_center">
+
+                <h:panelGroup>
+                    <h:panelGrid id="panel" border="0"  styleClass="center_table" cellpadding="7px" columns="2">
+                        <f:facet name="header">
+                            <h:outputText value="#{msgs.welcome_familiar_friends}" styleClass="center_prompt"/>
+                        </f:facet>
+
+                        <h:outputLabel for="emailAddress" value="#{msgs.welcome_email}" />
+                        <pou:inputText label="#{msgs.welcome_email}" id="emailAddress" value="#{agUserBean.emailAddress}" size="60"/>
+
+                        <h:outputLabel for="password" value="#{msgs.welcome_password}" />
+                        <pou:password id="password" value="#{agUserBean.password}"  size="60" feedback="false" minLength="0"/>
+                        <h:outputLabel/>
+
+                        <f:facet name="footer">
+                            <h:panelGroup style="display:block; text-align:center">
+                                <pou:commandButton 
+                                    ajax="false"
+                                    id="login" 
+                                    value="#{msgs.welcome_loginbtn}" 
+                                    action="#{agUserBean.loginAction}"
+                                />
+                                <pou:spacer width="10"/>
+                                <pou:commandButton 
+                                    ajax="false"
+                                    id="submit" 
+                                    value="#{msgs.welcome_check_email}" 
+                                    action="#{agUserBean.checkEmailAction}"
+                                />
+                            </h:panelGroup>
+                        </f:facet>
+                    </h:panelGrid>    
+                </h:panelGroup>
+                
+                <pou:spacer width="50"/>
+
+                <h:panelGrid id="marketingpanel" styleClass="marketingClass">
+                    <h:outputText id="marketing" value="#{msgs.welcome_marketing}"></h:outputText>
+                </h:panelGrid>
+                
+            </h:panelGrid>
+            </h:form>
+            </h:panelGroup>
+            </h:panelGrid>
+        </div>            
+
+        <div id="bottom">
+            <h:outputLabel styleClass="footer_content" value="#{msgs.footer_text}"/>            
+        </div>
+
+    </h:body>
+
+</html>

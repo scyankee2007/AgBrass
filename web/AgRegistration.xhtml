@@ -1,0 +1,69 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./MemberTemplate.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:pou="http://primefaces.org/ui">
+
+    <ui:define name="top">
+    </ui:define>
+
+    <ui:define name="content">
+        <h:panelGrid id="contentGrid" columns="2" width="100%" styleClass="center_content">
+            <h:panelGroup>
+
+                <pou:messages id="errorDisplay"  showSummary="true" showDetail="false"></pou:messages>
+
+                <h:outputLabel  value="#{msgs.registration_goodnews}" styleClass="banner_content"/>
+                <h:form id="registerForm">
+                    <h:panelGrid id="panel"  columns="2" border="0" styleClass="center_table" cellpadding="7px">
+                        <f:facet name="header">
+                            <h:outputText value="#{msgs.registration_tell_us}"/>
+                        </f:facet>
+
+                        <h:outputLabel for="emailAddress" value="#{msgs.registration_email}" />
+                        <pou:inputText label="#{msgs.registration_email}" id="emailAddress" value="#{agUserBean.emailAddress}" size="60"/>
+
+                        <h:outputLabel for="password" value="#{msgs.welcome_password}" />
+                        <pou:password id="password" value="#{agUserBean.registerPassword}"  size="60" feedback="true" minLength="6"/>
+
+                        <h:outputLabel for="confirmPassword" value="#{msgs.registration_confirm_password}" />
+                        <pou:password id="confirmPassword" value="#{agUserBean.confirmPassword}"  size="60" feedback="false" minLength="6"/>
+
+
+                        <h:outputLabel for="firstName" value="#{msgs.registration_first_name}" />
+                        <pou:inputText label="#{msgs.registration_first_name}" id="firstName" value="#{agUserBean.firstName}" size="60"/>
+
+                        <h:outputLabel for="lastName" value="#{msgs.registration_last_name}" />
+                        <pou:inputText label="#{msgs.registration_last_name}" id="lastName" value="#{agUserBean.lastName}" size="60"/>
+                        
+                       
+                        <f:facet name="footer">
+                            <h:panelGroup style="display:block; text-align:center">
+                                <pou:commandButton
+                                    ajax="false"
+                                    id="cancel"
+                                    value="#{msgs.cancelBtn}"
+                                    action="#{agSessionBean.startOverAction}"
+                                />
+                                <pou:spacer width="10"/>
+                                <pou:commandButton 
+                                    ajax="false"
+                                    id="submit" 
+                                    value="#{msgs.registration_registerBtn}" 
+                                    action="#{agUserBean.registerUserAction}"
+                                />
+                            </h:panelGroup>
+                    </f:facet>
+                    </h:panelGrid>    
+                </h:form>
+            </h:panelGroup>
+            <h:outputText id="marketing" value="#{msgs.registration_marketing}" styleClass="center_content"/>
+        </h:panelGrid>
+    
+    </ui:define>
+    <ui:define name="bottom">
+    </ui:define>
+
+</ui:composition>

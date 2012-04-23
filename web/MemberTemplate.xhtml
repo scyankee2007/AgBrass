@@ -1,0 +1,56 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:pou="http://primefaces.org/ui" >
+      
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <link href="./resources/css/default.css" rel="stylesheet" type="text/css" />
+        <link href="./resources/css/cssLayout.css" rel="stylesheet" type="text/css" />
+        <title>Silver Trumpets</title>
+        <h:outputScript library="js" name="authorization.js"/>
+</h:head>
+
+    <h:body>
+      
+        <div id="top">
+            <h:panelGrid id="title_table" bodyrows="1" cellspacing="2px" columns="2" border="0" width="100%"
+                         columnClasses="title_image,title_content">
+                <h:graphicImage id="trumpetImage" url="/images/SilverTrumpets.jpg"  alt="#{msgs.header_image_alt}" height="100" width="100"></h:graphicImage>
+                <h:panelGroup styleClass="title_content">
+                    <h:outputLabel styleClass="title_content">#{msgs.header_title_main}</h:outputLabel>
+                    <br></br>
+                    <h:outputLabel styleClass="title_content_subtle">#{msgs.header_title_verse}</h:outputLabel> 
+                </h:panelGroup>
+            </h:panelGrid>            
+            <ui:insert name="top">Top</ui:insert>
+        </div>
+        <pou:separator/>
+        <h:form id="menuForm">
+            <pou:menubar id="mainNav" widgetVar="mainNav">
+                <pou:menuitem value="Communities" action="manageclans"/>
+                <pou:menuitem value="Logout" action="#{agUserBean.logout}"/>
+            </pou:menubar>
+        </h:form>
+        <pou:separator/>
+
+        <div id="center">
+            <h:panelGrid columns="2" width="100%">
+                <h:graphicImage id="space" url="/images/blank.gif"  height="450" width="1"></h:graphicImage>
+                <h:panelGroup>
+                    <ui:insert name="content">Content</ui:insert>
+                </h:panelGroup>
+            </h:panelGrid>
+        </div>            
+
+        <div id="bottom">
+            <ui:insert name="bottom">Bottom</ui:insert>
+            <h:outputLabel styleClass="footer_content" value="#{msgs.footer_text}"></h:outputLabel>            
+        </div>
+
+    </h:body>
+
+</html>

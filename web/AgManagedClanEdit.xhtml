@@ -1,0 +1,397 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./MemberTemplate.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:pou="http://primefaces.org/ui">
+
+
+    <ui:composition template="./MemberTemplate.xhtml">
+
+            <ui:define name="top">
+            </ui:define>
+
+        <ui:define name="content">
+
+                <pou:messages globalOnly="false" id="errorDisplay"  showSummary="true" showDetail="true"></pou:messages>
+
+                <pou:tabView id="clanManagerTabs">
+                    
+                    <pou:tab title="#{msgs.edit_managed_first_tab_title}" id="baseTab">
+
+                        <h:panelGrid id="contentGrid" columns="2" width="100%" styleClass="center_content">
+                            <h:panelGroup>
+
+                                <h:outputLabel  value="#{msgs.edit_managed_clan_lets_work}" styleClass="banner_content"/>
+                                <h:form id="editManagedClanForm">
+                                    <h:panelGrid id="panel"  border="0" styleClass="center_table" cellpadding="7px" columns="2">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{edit_managed_clan_change_info}"/>
+                                        </f:facet>
+                                        
+                                        <h:outputLabel for="name" value="#{msgs.add_managed_clan_name}" />
+                                        <pou:inputText id="name" value="#{agClanManagerBean.name}" size="60"/>
+
+                                        <h:outputLabel for="address1" value="#{msgs.add_managed_clan_address1}" />
+                                        <pou:inputText id="address1" value="#{agClanManagerBean.address1}"  size="60"/>
+
+                                        <h:outputLabel for="address2" value="#{msgs.add_managed_clan_address2}" />
+                                        <pou:inputText id="address2" value="#{agClanManagerBean.address2}" size="60"/>
+
+                                        <h:outputLabel for="city" value="#{msgs.add_managed_clan_city}" />
+                                        <pou:inputText id="city" value="#{agClanManagerBean.city}"  size="60"/>
+
+                                        <h:outputLabel for="state" value="#{msgs.add_managed_clan_state}" />
+                                        <pou:inputText id="state" value="#{agClanManagerBean.state}"  size="60"/>
+
+                                        <h:outputLabel for="zip" value="#{msgs.add_managed_clan_zip}" />
+                                        <pou:inputText id="zip" value="#{agClanManagerBean.zip}"  size="60"/>
+
+                                        <h:outputLabel for="secretCode" value="#{msgs.add_managed_clan_secretCode}" />
+                                        <h:panelGroup>
+                                            <pou:inputText id="secretCode" value="#{agClanManagerBean.secretCode}"  size="60" disabled="true"/>
+                                            <pou:spacer width="10"/>
+                                            <pou:commandButton actionListener="#{agClanManagerBean.createSecretCode}" 
+                                                               value="#{msgs.add_managed_clan_secretCodeBtn}"
+                                                               update="secretCode">
+                                            </pou:commandButton>
+                                        </h:panelGroup>
+
+                                        <f:facet name="footer">
+                                            <h:panelGroup style="display:block; text-align:center">
+                                                <pou:commandButton 
+                                                    id="submit" 
+                                                    value="#{msgs.edit_managed_clan_saveBtn}" 
+                                                    action="#{agClanManagerBean.saveManagedClan}"
+                                                />
+                                            </h:panelGroup>
+                                    </f:facet>
+                                    </h:panelGrid>    
+                                </h:form>
+                            </h:panelGroup>
+                            <h:outputText id="marketing" value="#{msgs.add_managed_clan_marketing}" styleClass="center_content"/>
+                        </h:panelGrid>
+
+                    </pou:tab>
+                        
+                    <pou:tab title="#{msgs.edit_managed_second_tab_title}" id="messageTab">
+
+                      <h:form id="messageForm">
+                        <h:panelGrid id="messageGrid" columns="2" width="100%" styleClass="center_content">
+                            <h:panelGroup>
+                                <h:outputLabel  id="msglabel" value="#{msgs.message_workspace}" styleClass="banner_content"/>
+                                    <h:panelGrid id="panel" border="0" styleClass="center_table" cellpadding="7px" columns="2">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{msgs.message_info}"/>
+                                        </f:facet>
+
+                                            <h:outputLabel for="msgtitle" value="#{msgs.message_title}" />
+                                            <pou:inputText id="msgtitle" value="#{agMessageBean.title}" size="60">
+                                                <pou:ajax update="messageForm:submit, messageForm:publish, errorDisplay"/>
+                                            </pou:inputText>
+                                            
+
+                                            <h:outputLabel for="msgtext" value="#{msgs.message_text}" />
+                                            <pou:inputTextarea id="msgtext" value="#{agMessageBean.text}" cols="60" autoResize="false"/>
+
+                                        <f:facet name="footer">
+                                            <h:panelGroup style="display:block; text-align:center">
+                                                <pou:commandButton 
+                                                    id="submit" 
+                                                    value="#{msgs.message_saveBtn}" 
+                                                    actionListener="#{agMessageBean.saveMessage}"
+                                                    update="@form,errorDisplay"
+                                                    disabled="#{!agMessageBean.showSaveBtn}"
+                                                />
+                                                <pou:spacer width="10"/>
+                                                <pou:commandButton 
+                                                    id="publish" 
+                                                    value="#{msgs.message_publishBtn}"
+                                                    actionListener="#{agMessageBean.publishMessage}"
+                                                    update="@form,errorDisplay"
+                                                    disabled="#{!agMessageBean.showPublishBtn}"
+                                                />
+                                                <pou:spacer width="10"/>
+                                                <pou:commandButton 
+                                                    id="newMsg" 
+                                                    value="#{msgs.message_newBtn}" 
+                                                    actionListener="#{agMessageBean.newMessage}"
+                                                    update="@form,errorDisplay"
+                                                />
+                                            </h:panelGroup>
+                                    </f:facet>
+                                    </h:panelGrid>    
+                            </h:panelGroup>
+                            <h:panelGroup>
+                                <h:selectOneRadio id="publishedRadio" value="#{agMessageBean.listType}">
+                                    <f:selectItem itemValue="#{agMessageBean.pendingStatus}" itemLabel="#{msgs.message_pending_status}"/>
+                                    <f:selectItem itemValue="#{agMessageBean.allStatus}" itemLabel="#{msgs.message_all_messages_status}"/>
+                                    <pou:ajax update="messageForm:messageDT"/>
+                                </h:selectOneRadio>
+                                <pou:dataTable id="messageDT" value="#{agMessageBean.messageList}" var="message" styleClass="manageStyleClass">
+                                    <pou:column sortBy="#{message.title}">
+                                        <f:facet name="header">#{msgs.message_title}</f:facet>
+                                        <h:outputText value="#{message.title}"/>
+                                    </pou:column>
+                                    <pou:column>
+                                        <f:facet name="header">&nbsp;</f:facet>
+                                        <pou:commandLink value="#{msgs.message_edit}" 
+                                                         actionListener="#{agMessageBean.selectMessage(message)}" 
+                                                         update="@form,errorDisplay"
+                                                         process="@this"
+                                                         />
+                                    </pou:column>
+                                    <pou:column>
+                                        <f:facet name="header">&nbsp;</f:facet>
+                                        <pou:commandLink value="#{msgs.message_statistics}"></pou:commandLink>
+                                    </pou:column>
+                                    <pou:column>
+                                        <f:facet name="header">&nbsp;</f:facet>
+                                        <pou:commandLink value="#{msgs.message_delete}" 
+                                                         actionListener="#{agMessageBean.selectMessage(message)}"
+                                                         process="@this"
+                                                         onclick="msgDlg.show()">
+                                        </pou:commandLink>
+                                    </pou:column>
+                                </pou:dataTable>
+                            </h:panelGroup>
+                        </h:panelGrid>
+                          
+                        <pou:confirmDialog  message="#{msgs.message_delete_confirm_message}"
+                                            header="#{msgs.message_delete_confirm_header}" 
+                                            severity="alert"
+                                            widgetVar="msgDlg">
+                            <pou:commandButton  value="#{msgs.message_delete_confirmBtn}" 
+                                                actionListener="#{agMessageBean.deleteMessage}"
+                                                update="@form,errorDisplay"
+                                                process="@this"
+                                                onclick="msgDlg.hide()"/>
+                            <pou:commandButton value="#{msgs.message_delete_cancelBtn}" 
+                                               onclick="msgDlg.hide();" 
+                                               type="button" />
+                        </pou:confirmDialog>
+                      </h:form>
+
+
+                    </pou:tab>
+                    
+                    <pou:tab title="#{msgs.edit_managed_third_tab_title}" id="eventTab">
+                      <h:form id="eventForm">
+                        <h:panelGrid id="eventGrid" columns="2" width="100%" styleClass="center_content">
+                            <h:panelGroup>
+                                <h:outputLabel  value="#{msgs.event_workspace}" styleClass="banner_content"/>
+                                    <h:panelGrid id="panel" border="0" styleClass="center_table" cellpadding="7px" columns="2">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{msgs.event_info}"/>
+                                        </f:facet>
+                                        
+                                        <h:outputLabel for="eventname" value="#{msgs.event_name}" />
+                                        <pou:inputText id="eventname" value="#{agEventBean.name}" size="60">
+                                            <pou:ajax update="eventForm:submit eventForm:publish"/>
+                                        </pou:inputText>
+
+                                        <h:outputLabel for="eventlocation" value="#{msgs.event_location}" />
+                                        <pou:inputTextarea id="eventlocation" value="#{agEventBean.location}" cols="60" autoResize="false"/>
+
+                                        <h:outputLabel for="eventstartTime" value="#{msgs.event_startTime}" />
+                                        <pou:calendar id="eventstartTime" value="#{agEventBean.startTime}" pattern="MM/dd/yyyy hh:mm"/>
+
+                                        <h:outputLabel for="eventendTime" value="#{msgs.event_endTime}" />
+                                        <pou:calendar id="eventendTime" value="#{agEventBean.endTime}" pattern="MM/dd/yyyy hh:mm"/>
+
+                                        <h:outputLabel for="eventText" value="#{msgs.event_text}" />
+                                        <pou:inputTextarea id="eventText" value="#{agEventBean.text}" cols="60" autoResize="false"/>
+
+                                        <f:facet name="footer">
+                                            <h:panelGroup style="display:block; text-align:center">
+                                                <pou:commandButton 
+                                                    id="submit" 
+                                                    value="#{msgs.event_saveBtn}"
+                                                    actionListener="#{agEventBean.saveEvent}"
+                                                    disabled="#{!agEventBean.showSaveBtn}"
+                                                    update="@form,errorDisplay"
+                                                />
+                                                <pou:spacer width="10"/>
+                                                <pou:commandButton 
+                                                    id="publish" 
+                                                    value="#{msgs.event_publishBtn}" 
+                                                    actionListener="#{agEventBean.publishEvent}"
+                                                    disabled="#{!agEventBean.showPublishBtn}"
+                                                    update="@form,errorDisplay"
+                                                />
+                                                <pou:spacer width="10"/>
+                                                <pou:commandButton 
+                                                    id="newEvent" 
+                                                    value="#{msgs.event_newBtn}" 
+                                                    actionListener="#{agEventBean.newEvent}"
+                                                    update="@form,errorDisplay"
+                                                />
+                                            </h:panelGroup>
+                                    </f:facet>
+                                    </h:panelGrid>    
+                            </h:panelGroup>
+                            <h:panelGroup>
+                                
+                                <h:selectOneRadio id="publishedRadio" value="#{agEventBean.listType}">
+                                    <f:selectItem itemValue="#{agEventBean.pendingStatus}" itemLabel="#{msgs.event_pending_status}"/>
+                                    <f:selectItem itemValue="#{agEventBean.allStatus}" itemLabel="#{msgs.event_all_event_status}"/>
+                                    <pou:ajax update="eventForm:eventDT"/>
+                                </h:selectOneRadio>
+                               
+                                <pou:dataTable id="eventDT" value="#{agEventBean.eventList}" var="event" styleClass="manageStyleClass">
+                                    <pou:column sortBy="#{event.name}">
+                                        <f:facet name="header">#{msgs.event_name}</f:facet>
+                                        <h:outputText value="#{event.name}"/>
+                                    </pou:column>
+                                    <pou:column>
+                                        <f:facet name="header">&nbsp;</f:facet>
+                                        <pou:commandLink 
+                                            value="#{msgs.event_edit}"
+                                            actionListener="#{agEventBean.selectEvent(event)}"
+                                            update="@form, errorDisplay"
+                                            process="@this"
+                                            />
+                                    </pou:column>
+                                    <pou:column>
+                                        <f:facet name="header">&nbsp;</f:facet>
+                                        <pou:commandLink value="#{msgs.event_statistics}"/>
+                                    </pou:column>
+                                    <pou:column>
+                                        <f:facet name="header">&nbsp;</f:facet>
+                                        <pou:commandLink 
+                                            value="#{msgs.event_delete}"
+                                            actionListener="#{agEventBean.selectEvent(event)}"
+                                            process="@this"
+                                            onclick="eventDlg.show()"/>
+                                    </pou:column>
+                                </pou:dataTable>
+
+                            </h:panelGroup>
+                        </h:panelGrid>
+                          
+                        <pou:confirmDialog  message="#{msgs.event_delete_confirm_message}"
+                                            header="#{msgs.event_delete_confirm_header}" 
+                                            severity="alert"
+                                            widgetVar="eventDlg">
+                            <pou:commandButton  value="#{msgs.event_delete_confirmBtn}" 
+                                                actionListener="#{agEventBean.deleteEvent}"
+                                                update="@form,errorDisplay"
+                                                process="@this"
+                                                onclick="eventDlg.hide()"/>
+                            <pou:commandButton value="#{msgs.message_delete_cancelBtn}" 
+                                               onclick="eventDlg.hide();" 
+                                               type="button" />
+                        </pou:confirmDialog>
+                          
+                      </h:form>
+
+                    </pou:tab>
+
+
+                    <pou:tab title="#{msgs.edit_managed_forth_tab_title}" id="memberTab">
+
+                        <h:form id="channelForm">
+                        <h:panelGrid id="channelGrid" columns="2" width="100%" styleClass="center_content">
+                            <h:panelGroup>
+                                <h:outputLabel  id="channellabel" value="#{msgs.channel_workspace}" styleClass="banner_content"/>
+                                    <h:panelGrid id="panel" border="0" styleClass="center_table" cellpadding="7px" columns="2">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{msgs.channel_info}"/>
+                                        </f:facet>
+
+                                        <h:outputLabel for="channeltype" value="#{msgs.channel_type}" />
+                                        <pou:selectOneMenu id="channeltype"  value="#{agClanChannelBean.idChannelType}">
+                                            <f:selectItem itemLabel="Select One" itemValue=""/>
+                                            <f:selectItems value="#{agClanChannelBean.channelTypes}" var="channelType" 
+                                                           itemLabel="#{channelType.name}" itemValue="#{channelType.idChannelType}"/>
+                                        </pou:selectOneMenu>
+
+                                        <h:outputLabel for="channelAddress1" value="#{msgs.channel_eaddress1}" />
+                                        <pou:inputText id="channelAddress1" value="#{agClanChannelBean.electronicAddress1}" size="60">
+                                            <pou:ajax update="channelForm:submit"/>
+                                        </pou:inputText>
+
+                                        <h:outputLabel for="channelAddress2" value="#{msgs.channel_eaddress2}" />
+                                        <pou:inputText id="channelAddress2" value="#{agClanChannelBean.electronicAddress2}" size="60"/>
+
+                                        <h:outputLabel for="channelPassword" value="#{msgs.channel_password}" />
+                                        <pou:inputText id="channelPassword" value="#{agClanChannelBean.password}" size="60"/>
+
+                                        <f:facet name="footer">
+                                            <h:panelGroup style="display:block; text-align:center">
+                                                <pou:commandButton 
+                                                    id="submit" 
+                                                    value="#{msgs.channel_saveBtn}" 
+                                                    actionListener="#{agClanChannelBean.saveClanChannel}"
+                                                    update="@form,errorDisplay"
+                                                    disabled="#{!agClanChannelBean.showSaveBtn}"
+                                                />
+                                                <pou:spacer width="10"/>
+                                                <pou:commandButton 
+                                                    id="newMsg" 
+                                                    value="#{msgs.channel_newBtn}" 
+                                                    actionListener="#{agClanChannelBean.newClanChannel}"
+                                                    update="@form,errorDisplay"
+                                                />
+                                            </h:panelGroup>
+                                    </f:facet>
+                                    </h:panelGrid>    
+                            </h:panelGroup>
+                            <h:panelGroup>
+                                <pou:dataTable id="channelDT" value="#{agClanChannelBean.clanChannels}" var="channel" styleClass="manageStyleClass">
+                                    <pou:column>
+                                        <f:facet name="header">#{msgs.channel_type}</f:facet>
+                                        <h:outputText value="#{channel.channelType.name}"/>
+                                    </pou:column>
+                                    <pou:column>
+                                        <f:facet name="header">&nbsp;</f:facet>
+                                        <pou:commandLink value="#{msgs.channel_edit}" 
+                                                         actionListener="#{agClanChannelBean.editClanChannel(channel)}" 
+                                                         update="@form,errorDisplay"
+                                                         process="@this"
+                                                         />
+                                    </pou:column>
+                                    <pou:column>
+                                        <f:facet name="header">&nbsp;</f:facet>
+                                        <pou:commandLink value="#{msgs.channel_delete}" 
+                                                         actionListener="#{agClanChannelBean.selectClanChannel(channel)}"
+                                                         process="@this"
+                                                         onclick="channelDlg.show()">
+                                        </pou:commandLink>
+                                    </pou:column>
+                                    <pou:column>
+                                        <f:facet name="header">&nbsp;</f:facet>
+                                        <pou:commandLink value="#{msgs.channel_authorize}" 
+                                                         actionListener="#{agClanChannelBean.selectClanChannel(channel)}"
+                                                         onclick="AuthorizeUser('#{channel.channelType.name}')">
+                                        </pou:commandLink>
+                                    </pou:column>
+                                </pou:dataTable>
+                            </h:panelGroup>
+                        </h:panelGrid>
+                          
+                        <pou:confirmDialog  message="#{msgs.channel_delete_confirm_message}"
+                                            header="#{msgs.channel_delete_confirm_header}" 
+                                            severity="alert"
+                                            widgetVar="channelDlg">
+                            <pou:commandButton  value="#{msgs.channel_delete_confirmBtn}" 
+                                                actionListener="#{agClanChannelBean.deleteClanChannel}"
+                                                update="@form,errorDisplay"
+                                                process="@this"
+                                                onclick="channelDlg.hide()"/>
+                            <pou:commandButton value="#{msgs.channel_delete_cancelBtn}" 
+                                               onclick="channelDlg.hide();" 
+                                               type="button" />
+                        </pou:confirmDialog>
+                      </h:form>
+
+                    </pou:tab>
+                </pou:tabView>
+            </ui:define>
+
+            <ui:define name="bottom">
+            </ui:define>
+
+        </ui:composition>
+</ui:composition>
+

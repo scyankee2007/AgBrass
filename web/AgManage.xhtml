@@ -1,0 +1,100 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./MemberTemplate.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:pou="http://primefaces.org/ui">
+
+    <ui:define name="top">
+    </ui:define>
+
+    <ui:define name="content">
+        
+        <h:panelGrid width="100%">
+            
+        <f:facet name="header">
+            <h:outputFormat value="#{msgs.manage_welcome}" styleClass="banner_content">
+                <f:param value="#{agUserBean.firstName}"/>
+            </h:outputFormat>
+        </f:facet>
+
+        <pou:tabView id="userTabs">
+
+           <pou:tab title="#{msgs.clan_select_first_tab_title}" id="firstTab">
+                
+              <h:form id="memberForm">
+                <h:panelGrid id="memberTable" width="100%" styleClass="center_content">
+                    <f:facet name="header">
+                        <h:outputLabel value="#{msgs.manage_member_header}" styleClass="banner_content"/>
+                        <br/>
+                        <pou:spacer height="10"/>
+                    </f:facet>
+                    <h:outputLabel for="secret_code" value="#{msgs.manage_secret_code}"/>
+                    <h:panelGrid columns="2">
+                        <h:inputText id="secret_code" size="60"> </h:inputText>
+                        <pou:commandButton value="#{msgs.manage_join_community}" 
+                                           actionListener="#{agClanManagerBean.joinClanActionListener}"
+                                           update="memberClansDT"/>
+                    </h:panelGrid>
+                    <pou:dataTable id="memberClansDT" value="#{agClanManagerBean.memberClans}" var="clan" styleClass="memberStyleClass">
+                        <pou:column>
+                            <f:facet name="header">#{msgs.manage_clan_name}</f:facet>
+                            <h:outputText value="#{clan.name}"/>
+                        </pou:column>
+                        <pou:column>
+                            <f:facet name="header">&nbsp;</f:facet>
+                            <pou:commandLink value="#{msgs.manage_edit}"
+                                           action="#{agClanManagerBean.editMemberClan(clan)}"/>
+                        </pou:column>
+                        <pou:column>
+                            <f:facet name="header">&nbsp;</f:facet>
+                            <pou:commandLink value="#{msgs.manage_resign}" 
+                                             actionListener="#{agClanManagerBean.removeMemberClan( clan )}"
+                                             process="@this"
+                                             update="memberForm"/>
+                        </pou:column>
+                    </pou:dataTable>
+                </h:panelGrid>
+              </h:form>
+           </pou:tab>
+           <pou:tab title="#{msgs.clan_select_second_tab_title}" id="secondTab">
+                <h:form id="managerForm">
+                    <h:panelGrid columns="2" styleClass="center_content" width="100%">
+                        <f:facet name="header">
+                            <h:outputLabel value="#{msgs.manage_manage_header}" styleClass="banner_content"/>
+                            <br/>
+                            <pou:spacer height="10"/>
+                        </f:facet>
+                        <pou:dataTable id="managedClansDT" value="#{agClanManagerBean.managedClans}" var="clan" styleClass="manageStyleClass">
+                            <pou:column>
+                                <f:facet name="header">#{msgs.manage_clan_name}</f:facet>
+                                <h:outputText value="#{clan.name}"/>
+                            </pou:column>
+                            <pou:column>
+                                <f:facet name="header">&nbsp;</f:facet>
+                                <pou:commandLink value="#{msgs.manage_edit}" action="#{agClanManagerBean.editManagedClan( clan )}"/>
+                            </pou:column>
+                            <pou:column>
+                                <f:facet name="header">&nbsp;</f:facet>
+                                <pou:commandLink value="#{msgs.manage_remove}" action="#{agClanManagerBean.removeManagedClan( clan )}"/>
+                            </pou:column>
+                        </pou:dataTable>
+                        <f:facet name="footer">
+                            <pou:commandButton 
+                                value="#{msgs.manage_add_community}" 
+                                action="addmanagedclan"/>
+                            
+                        </f:facet>
+                    </h:panelGrid>
+            </h:form>
+           </pou:tab>
+        
+       </pou:tabView>
+     </h:panelGrid>
+        
+    </ui:define>
+
+    <ui:define name="bottom">
+    </ui:define>
+
+</ui:composition>

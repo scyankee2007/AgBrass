@@ -1,0 +1,86 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./MemberTemplate.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:pou="http://primefaces.org/ui">
+
+
+
+        <ui:composition template="./MemberTemplate.xhtml">
+
+            <ui:define name="top">
+            </ui:define>
+
+            <ui:define name="content">
+        <h:panelGrid id="contentGrid" columns="2" width="100%" styleClass="center_content">
+            <h:panelGroup>
+                
+                <h:outputLabel  value="#{msgs.add_managed_clan_goodnews}" styleClass="banner_content"/>
+                <h:form id="addManagedClanForm">
+                    <h:panelGrid id="panel"  columns="3" border="0" styleClass="center_table" cellpadding="7px">
+                        <f:facet name="header">
+                            <h:outputText value="#{msgs.add_managed_clan_tellus}"/>
+                        </f:facet>
+                        <h:outputLabel for="name" value="#{msgs.add_managed_clan_name}" />
+                        <h:inputText id="name" value="#{agClanManagerBean.name}" size="60"/>
+                        <h:message for="name" styleClass="errorMsg"/>
+                        
+                        <h:outputLabel for="address1" value="#{msgs.add_managed_clan_address1}" />
+                        <h:inputText id="address1" value="#{agClanManagerBean.address1}"  size="60"/>
+                        <h:message for="address1" styleClass="errorMsg"/>
+
+                        <h:outputLabel for="address2" value="#{msgs.add_managed_clan_address2}" />
+                        <h:inputText id="address2" value="#{agClanManagerBean.address2}" size="60"/>
+                        <h:message for="address2" styleClass="errorMsg"/>
+                        
+                        <h:outputLabel for="city" value="#{msgs.add_managed_clan_city}" />
+                        <h:inputText id="city" value="#{agClanManagerBean.city}"  size="60"/>
+                        <h:message for="city" styleClass="errorMsg"/>
+                        
+                        <h:outputLabel for="state" value="#{msgs.add_managed_clan_state}" />
+                        <h:inputText id="state" value="#{agClanManagerBean.state}"  size="60"/>
+                        <h:message for="state" styleClass="errorMsg"/>
+                        
+                        <h:outputLabel for="zip" value="#{msgs.add_managed_clan_zip}" />
+                        <h:inputText id="zip" value="#{agClanManagerBean.zip}"  size="60"/>
+                        <h:message for="zip" styleClass="errorMsg"/>
+
+                        <h:outputLabel for="secretCode" value="#{msgs.add_managed_clan_secretCode}" />
+                        <h:panelGroup>
+                            <h:inputText id="secretCode" value="#{agClanManagerBean.secretCode}"  size="60"/>
+                            <pou:commandButton actionListener="#{agClanManagerBean.createSecretCode}" 
+                                               value="#{msgs.add_managed_clan_secretCodeBtn}"
+                                               update="secretCode">
+                            </pou:commandButton>
+                        </h:panelGroup>
+                       <h:message for="secretCode" styleClass="errorMsg"/>
+
+                        <f:facet name="footer">
+                            <h:panelGroup style="display:block; text-align:center">
+                                <h:commandButton
+                                    id="cancel"
+                                    value="#{msgs.cancelBtn}"
+                                    action="#{agSessionBean.startOverAction}"
+                                />
+                                <h:commandButton 
+                                    id="submit" 
+                                    value="#{msgs.registration_registerBtn}" 
+                                    action="#{agClanManagerBean.addManagedClanAction}"
+                                />
+                            </h:panelGroup>
+                    </f:facet>
+                    </h:panelGrid>    
+                </h:form>
+            </h:panelGroup>
+            <h:outputText id="marketing" value="#{msgs.add_managed_clan_marketing}" styleClass="center_content"/>
+        </h:panelGrid>
+            </ui:define>
+
+            <ui:define name="bottom">
+            </ui:define>
+
+        </ui:composition>
+
+
+</ui:composition>
+

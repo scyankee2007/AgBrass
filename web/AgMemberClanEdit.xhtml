@@ -1,0 +1,111 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./MemberTemplate.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:pou="http://primefaces.org/ui">
+
+
+    <ui:composition template="./MemberTemplate.xhtml">
+
+            <ui:define name="top">
+            </ui:define>
+
+        <ui:define name="content">
+            <pou:messages globalOnly="true" id="errorDisplay"  showSummary="true" showDetail="true"></pou:messages>
+            <h:form id="channelForm">
+            <h:panelGrid id="channelGrid" columns="2" width="100%" styleClass="center_content">
+                <h:panelGroup>
+                    <h:outputLabel  id="channellabel" value="#{msgs.channel_workspace}" styleClass="banner_content"/>
+                        <h:panelGrid id="panel" border="0" styleClass="center_table" cellpadding="7px" columns="2">
+                            <f:facet name="header">
+                                <h:outputText value="#{msgs.channel_info}"/>
+                            </f:facet>
+
+                            <h:outputLabel for="channeltype" value="#{msgs.channel_type}" />
+                            <pou:selectOneMenu id="channeltype"  value="#{agMemberChannelBean.idChannelType}">
+                                <f:selectItem itemLabel="Select One" itemValue=""/>
+                                <f:selectItems value="#{agMemberChannelBean.channelTypes}" var="channelType" 
+                                               itemLabel="#{channelType.name}" itemValue="#{channelType.idChannelType}"/>
+                            </pou:selectOneMenu>
+
+                            <h:outputLabel for="channelAddress1" value="#{msgs.channel_eaddress1}" />
+                            <pou:inputText id="channelAddress1" value="#{agMemberChannelBean.electronicAddress1}" size="60">
+                                <pou:ajax update="channelForm:submit"/>
+                            </pou:inputText>
+
+                            <h:outputLabel for="channelAddress2" value="#{msgs.channel_eaddress2}" />
+                            <pou:inputText id="channelAddress2" value="#{agMemberChannelBean.electronicAddress2}" size="60"/>
+
+                            <h:outputLabel for="channelPassword" value="#{msgs.channel_password}" />
+                            <pou:inputText id="channelPassword" value="#{agMemberChannelBean.password}" size="60"/>
+
+                            <f:facet name="footer">
+                                <h:panelGroup style="display:block; text-align:center">
+                                    <pou:commandButton 
+                                        id="submit" 
+                                        value="#{msgs.channel_saveBtn}" 
+                                        actionListener="#{agMemberChannelBean.saveMemberChannel}"
+                                        update="@form,errorDisplay"
+                                        disabled="#{!agMemberChannelBean.showSaveBtn}"
+                                    />
+                                    <pou:spacer width="10"/>
+                                    <pou:commandButton 
+                                        id="newMsg" 
+                                        value="#{msgs.channel_newBtn}" 
+                                        actionListener="#{agMemberChannelBean.newMemberChannel}"
+                                        update="@form,errorDisplay"
+                                    />
+                                </h:panelGroup>
+                        </f:facet>
+                        </h:panelGrid>    
+                </h:panelGroup>
+                <h:panelGroup>
+                    <pou:dataTable id="channelDT" value="#{agMemberChannelBean.memberChannels}" var="channel" styleClass="manageStyleClass">
+                        <pou:column>
+                            <f:facet name="header">#{msgs.channel_type}</f:facet>
+                            <h:outputText value="#{channel.channelType.name}"/>
+                        </pou:column>
+                        <pou:column>
+                            <f:facet name="header">&nbsp;</f:facet>
+                            <pou:commandLink value="#{msgs.channel_edit}" 
+                                             actionListener="#{agMemberChannelBean.editMemberChannel(channel)}" 
+                                             update="@form,errorDisplay"
+                                             process="@this"
+                                             />
+                        </pou:column>
+                        <pou:column>
+                            <f:facet name="header">&nbsp;</f:facet>
+                            <pou:commandLink value="#{msgs.channel_delete}" 
+                                             actionListener="#{agMemberChannelBean.selectMemberChannel(channel)}"
+                                             process="@this"
+                                             onclick="channelDlg.show()">
+                            </pou:commandLink>
+                        </pou:column>
+                    </pou:dataTable>
+                </h:panelGroup>
+            </h:panelGrid>
+
+            <pou:confirmDialog  message="#{msgs.channel_delete_confirm_message}"
+                                header="#{msgs.channel_delete_confirm_header}" 
+                                severity="alert"
+                                widgetVar="channelDlg">
+                <pou:commandButton  value="#{msgs.channel_delete_confirmBtn}" 
+                                    actionListener="#{agMemberChannelBean.deleteMemberChannel}"
+                                    update="@form,errorDisplay"
+                                    process="@this"
+                                    onclick="channelDlg.hide()"/>
+                <pou:commandButton value="#{msgs.channel_delete_cancelBtn}" 
+                                   onclick="channelDlg.hide();" 
+                                   type="button" />
+            </pou:confirmDialog>
+          </h:form>
+
+        </ui:define>
+
+            <ui:define name="bottom">
+            </ui:define>
+
+        </ui:composition>
+</ui:composition>
+

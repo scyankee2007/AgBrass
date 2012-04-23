@@ -1,0 +1,131 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<!-- =========== FULL CONFIGURATION FILE ================================== -->
+
+<faces-config version="2.0"
+    xmlns="http://java.sun.com/xml/ns/javaee" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd">
+
+        <application>            
+            <resource-bundle>
+                <base-name>com.pinartek.ui.messages</base-name>
+                <var>msgs</var>
+            </resource-bundle>
+        </application>
+        
+        <navigation-rule>
+            <from-view-id>/AgWelcome.xhtml</from-view-id>
+            <navigation-case>
+                <from-outcome>register</from-outcome>
+                <to-view-id>/AgRegistration.xhtml</to-view-id>
+                <redirect/>
+            </navigation-case>
+            <navigation-case>
+                <from-outcome>login</from-outcome>
+                <to-view-id>/AgManage.xhtml</to-view-id>
+                <redirect/>
+            </navigation-case>
+        </navigation-rule>
+
+        <navigation-rule>
+            <from-view-id>/AgRegistration.xhtml</from-view-id>
+            <navigation-case>
+                <from-outcome>startover</from-outcome>
+                <to-view-id>/AgWelcome.xhtml</to-view-id>
+                <redirect/>
+            </navigation-case>
+            <navigation-case>
+                <from-outcome>success</from-outcome>
+                <to-view-id>/AgManage.xhtml</to-view-id>
+                <redirect/>
+            </navigation-case>
+            <navigation-case>
+                <from-outcome>logout</from-outcome>
+                <to-view-id>/AgWelcome.xhtml</to-view-id>
+                <redirect/>
+            </navigation-case>
+        </navigation-rule>
+        
+        <navigation-rule>
+            <from-view-id>/AgManage.xhtml</from-view-id>
+            <navigation-case>
+                <from-outcome>addmanagedclan</from-outcome>
+                <to-view-id>/AgManagedClanAdd.xhtml</to-view-id>
+                <redirect/>
+            </navigation-case>
+            <navigation-case>
+                <from-outcome>success</from-outcome>
+                <to-view-id>/AgManage.xhtml</to-view-id>
+                <redirect/>
+            </navigation-case>
+            <navigation-case>
+                <from-outcome>editmanagedclan</from-outcome>
+                <to-view-id>/AgManagedClanEdit.xhtml</to-view-id>
+                <redirect/>
+            </navigation-case>
+            <navigation-case>
+                <from-outcome>editmemberclan</from-outcome>
+                <to-view-id>/AgMemberClanEdit.xhtml</to-view-id>
+                <redirect/>
+            </navigation-case>
+            <navigation-case>
+                <from-outcome>logout</from-outcome>
+                <to-view-id>/AgWelcome.xhtml</to-view-id>
+                <redirect/>
+            </navigation-case>
+        </navigation-rule>
+
+        <navigation-rule>
+            <from-view-id>/AgManagedClanAdd.xhtml</from-view-id>
+            <navigation-case>
+                <from-outcome>success</from-outcome>
+                <to-view-id>/AgManage.xhtml</to-view-id>
+                <redirect/>
+            </navigation-case>
+            <navigation-case>
+                <from-outcome>manageclans</from-outcome>
+                <to-view-id>/AgManage.xhtml</to-view-id>
+                <redirect/>
+            </navigation-case>
+            <navigation-case>
+                <from-outcome>logout</from-outcome>
+                <to-view-id>/AgWelcome.xhtml</to-view-id>
+                <redirect/>
+            </navigation-case>
+        </navigation-rule>
+
+        <navigation-rule>
+            <from-view-id>/AgManagedClanEdit.xhtml</from-view-id>
+            <navigation-case>
+                <from-outcome>success</from-outcome>
+                <to-view-id>/AgManagedClanEdit.xhtml</to-view-id>
+                <redirect/>
+            </navigation-case>
+            <navigation-case>
+                <from-outcome>manageclans</from-outcome>
+                <to-view-id>/AgManage.xhtml</to-view-id>
+                <redirect/>
+            </navigation-case>
+            <navigation-case>
+                <from-outcome>logout</from-outcome>
+                <to-view-id>/AgWelcome.xhtml</to-view-id>
+                <redirect/>
+            </navigation-case>
+        </navigation-rule>
+
+        <navigation-rule>
+            <from-view-id>/AgMemberClanEdit.xhtml</from-view-id>
+            <navigation-case>
+                <from-outcome>manageclans</from-outcome>
+                <to-view-id>/AgManage.xhtml</to-view-id>
+                <redirect/>
+            </navigation-case>
+            <navigation-case>
+                <from-outcome>logout</from-outcome>
+                <to-view-id>/AgWelcome.xhtml</to-view-id>
+                <redirect/>
+            </navigation-case>
+        </navigation-rule>
+
+</faces-config>
